@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>公車停靠系統</title>
+        <link rel="icon" type="image/svg+xml" href="{{url_for('static', filename='image/Homeicon.svg')}}" />
+        <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="{{url_for('static', filename='script/Frontend.js')}}"></script>
+    </head>
+    {% if back: %}
+        <body class="text-center" onload="getLocation();">
+        <main class="container position-absolute top-50 start-50 translate-middle"  style="max-width:720px">
+          <form action="{{ url_for('SendorDeined') }}" method="GET" class="form">
+            <a href="{{url_for('home')}}">
+             <img class="mb-4" src="{{url_for('static', filename='image/Homeicon.svg')}}" alt="" width="72" height="57">
+             <h1 id="" class="h3 mb-3 fw-normal"> {{back}} <br></h1>
+            </a>
+
+          </form>
+        </main>
+        </body>
+    {% else: %}
+      <body class="text-center" onload="getLocation();">
+        <main class="container position-absolute top-50 start-50 translate-middle"  style="max-width:720px">
+          <form action="{{ url_for('SendorDeined') }}" method="GET" class="form">
+            <img class="mb-4" src="../static/image/Homeicon.svg" alt="" width="72" height="57">
+            <h1 id="title" class="h3 mb-3 fw-normal">歡迎使用公車停靠系統<br><br>請輸入要求資訊</h1>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">車線</label>
+                <select class="form-select" id="inputGroupSelect01" name="inputGroupSelect01" onchange="yourfunction()">
+                  <option selected>Choose...</option>
+                    {% for line in value %}
+                    <option value="{{ line }}">{{ line }}線:    <span>{{ value2[value.index(line)] }}</span></option>
+                    {% endfor %}
+                </select>
+              </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect02">起點車站</label>
+                <select class="form-select" id="inputGroupSelect02" name="inputGroupSelect02">
+                    <option selected>Choose...</option>
+                </select>
+              </div>
+              <div class="input-group mb-3" hidden>
+                  <input class="text" id="inputGrouphidden01" name="inputGrouphidden01">
+                  <input class="text" id="inputGrouphidden02" name="inputGrouphidden02">
+              </div>
+            <button id="send"  class="w-100 btn btn-lg btn-primary" type="submit">送出</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2021–12-09</p>
+          </form>
+        </main>
+      </body>
+       {% endif %}
+</html>
